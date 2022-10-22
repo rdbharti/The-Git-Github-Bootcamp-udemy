@@ -262,3 +262,7 @@ Reflogs also expire.
 Git cleans out old entries after around 90 days, though this can be configured.
 
 
+git reflog show HEAD : this command accepts expire/show/exists
+						show is default subcommand
+				show - list the logs of a specific reference (default to HEAD)
+	eg: git reglog show main {lists the logs for the tip of the main branch}
