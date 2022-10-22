@@ -266,3 +266,12 @@ git reflog show HEAD : this command accepts expire/show/exists
 						show is default subcommand
 				show - list the logs of a specific reference (default to HEAD)
 	eg: git reglog show main {lists the logs for the tip of the main branch}
+
+++++++++++++++++++++++++
+Reflog References
+++++++++++++++++++++++++
+
+name@{qualifier} : we can use this syntac to access specific ref pointers and can pass them to other commands
+					incliding checkout, reset, and merge
+					
+		eg: git reflog show HEAD@{10} : This will List results from very beginning of the repo to HEAD~10
