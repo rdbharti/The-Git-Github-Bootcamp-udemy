@@ -275,3 +275,21 @@ name@{qualifier} : we can use this syntac to access specific ref pointers and ca
 					incliding checkout, reset, and merge
 					
 		eg: git reflog show HEAD@{10} : This will List results from very beginning of the repo to HEAD~10
+		
++++++ Timed References +++++
+
+every entry in the reference log has a timestamp associated with it.
+We can filter reflogg entries by date/time by usin using qualifiers.
+	1.day.ago
+	3.minutes.ago
+	yesterday
+	Fri, 12 Feb 2022 14:06:21 - 0800
+
+git reflog <branch-name>@{one.week.ago}
+git reflog <branch-name>@{2.days.ago}
+git reflog <branch-name>@{yesterday}
+
+we can also use these qualifiers with other git commands
+
+git checkout bugfix@{5.minutes.ago}
+git diff main@{0} main@{yesterday}
