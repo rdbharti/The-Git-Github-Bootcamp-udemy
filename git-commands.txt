@@ -1,0 +1,243 @@
+git log : Shows History of the current repository
+
+git status : current status of git repository and its contents
+
+git init : create a new git repository
+
+git add : adds specific files to the staging area.
+		  Seperate files with spaces to add multiple files at once.
+		 
+git commit -m "<message>" : to commit changes from staging area to git
+
+git commit -m "<some message>"
+git add forgotten_file	: To improve/ammend the last commit
+git commit --amend
+
+file .gitignore : tell git to ignore particular files/folders 
+	eg -	.DS_Store
+			folderName/
+			*.log etc
+			
+=========================
+	Branching 
+=========================
+			
+git branch : view existing branch
+
+git branch <branch-name> : create a new-Branch based upon the current HEAD.
+						   HEAD stays at the same place, it does not change to the new-Branch automatically.
+						   
+git switch <branch-name> : switch to other branch
+
+git switch -c <branch-name> : create and switch to new-Branch.
+
+git branch -d <branch-name> : delete a branch
+git branch -D <branch-name> : force delete a branch
+
+git branch -m <branch-name> : move/rename a branch
+git branch -M <branch-name> : force move/rename a branch
+
+
+============== 
+	Merging
+===============
+
+++++++ Fast-Forward Merge ++++++
+
+1. first switch over to the branch to which we want merge
+	eg git switch master
+2. Then merge the Branch to the current HEAD/Branch, in this case Master
+	eg git merge <branch-name>
+	
++++++++ Merge Commit ++++++
+in simple merge we need to provide a <message>
+
+in conflicting merge we need to resolve the conflict by removing/adding/combining the files/texts
+
+================
+	DIFF
+================
+
+git diff : shows all unstaged file(s) differences
+
+git diff HEAD : show all staged and unstaged file(s) differences
+git diff HEAD <filename1> <filename2>: show specific staged and unstaged file(s) differences
+
+git diff --staged : show staged differences
+git diff --cached
+
+git diff --staged <filename> <filename2>: show staged difference in the specific file
+git diff --cached <filename> <filename2>
+
+git diff <branch1> <branch2> : list changes between tips of branch1 and branch2
+git diff <branch1..<branch2>
+
+git diff <commit1> <commit2> : Compare two commits, provide git diff with commit hashes of the commits
+git diff <commit1>..<commit2>
+
+
+=================
+	Stashing
+=================
+
+git stash : Save changes that you are not yet ready to commit.
+			you can stash changes and come back to it later.
+			It will take all uncommitted changes (staged and unstaged) and stash them, 
+			reverting the changes in your working directory
+
+git stash pop : removes the most recentlt stashed changes in your stash and re-apply 
+				them to your working copy
+				
+git stash apply : apply whatever is stashed, without removing it from stash
+				  useful when stashed changes to be applied to multiple branches
+				  
+git stash list : list stashed changes
+	eg:
+		git stash list
+			stash@{0}: WIP on rainbow: 5a2e5a1 remove backgrnd color
+			stash@{1}: WIP on rainbow: 5a2e5a1 remove backgrnd color
+			stash@{2}: WIP on rainbow: 5a2e5a1 remove backgrnd color
+			stash@{3}: WIP on goodbye: dc9a539 create index.html and app.css
+			
+git stash apply stash@{2}
+git stash apply 2
+
+git stash drop <stash-id>
+	eg
+		git stash drop stash@{1}
+		git stash drop "stash@{1}"
+		git stash drop 1
+		
+git stash clear : empty the stash
+
+=====================
+	Checkout
+=====================
+
+git checkout commit <commit-hash> : view any previous commit
+
+git checkout HEAD~1 : view just the previous commit (Parent)
+git checkout HEAD~2 : refers GrandParent
+
+++++++++++ Discard Changes From a File +++++++++++
+
+git checkout HEAD <file(s)> : undo the changes to the last commmit
+git checkout -- <file(s)>
+
+git restore <file> : undo changes to the last commit
+
+git restore --soure HEAD~1 <file> : undo changes to a specific commit
+
+git restore --staged <file> : unstaging files
+
+
+
+
+git reset <commit-hash> : reset the repo back to a specific commit, but the actual conents remain.
+						  The commits are gone
+						  We lose the commits, not the changes done
+						  
+git reset --hard <commit-hash> : reset the repo back to a specific commit and changes also reverts.
+
+
+
+
+git revert <commit-hash> : creates a brand new commit which reverses/undos the changes from a commit.
+							Because it results in a new commit, you will be prompted to enter a commit message
+							
+							
+							
+				=======================================================
+					+++++++++++++++++++++ GITHUB +++++++++++++++++++
+				=======================================================
+				
+git clone <repo-url> : initializes a new repo with contents of repo-url
+							
+
+git remote 		: display list of remotes.
+git remote -v 	  if no remote added, it won't show anything
+
+git remote add <name-label> <url> : to add a remote-repo to local
+	eg : git remote add origin git@github.com:rdbharti/gihub-basic-exercise.git
+
+git remote rename <old-name> <new-name> : rename the remote-repo on local
+
+git remote remove <name> : remove the remote-repo from local
+
+git push <name-label> <branch> : push the code to remote-repo from local
+
+git push <name-label> <local-branch>:<remote-branch> : Pushing a local branch to an existing/new remote branch on remote
+
+git push -u <name-label> <branch> : -u flag allows to create an upstream which allows to run just the command "git push" 
+									instead of "git push origin master"
+									
+git branch -M <NAME> : this will rename the current branch to <NAME>
+	eg : 
+		git branch -M main
+		
+===============================
+	GIT TAGS
+===============================
+
+git tag : list all the tags
+
+git tag -l <pattern> : searcgh tag that match a particular pattern {-l is english alphabet L}
+	eg: git tag -l "*beta*"
+	
+git checkout <tag> : to view the state of repo at a particular tag
+					This puts us in detached HEAD
+					Tags refer to a particular commit, not a branch
+					
+++++++++++++++++++++++++++++
+	LIGHT WEIGHT TAGS
+++++++++++++++++++++++++++++
+
+By default git will create the tag referring to the commit that HEAD is referencing.
+
+git tag <tag-name>
+
+++++++++++++++++++++++++++++
+	Annotated WEIGHT TAGS
+++++++++++++++++++++++++++++
+
+git tag -a <tag-name>: create annotated tag
+						git will then open your default text editor and prompt for additional information
+
+git  tag -a <tag-name> -m "<message>" : Similar to git commit, we can also use the -m flag to pass a message directly and forgo
+									  the opening of the text editor.
+									  
+git show <tag-name> : to view the metadata of the tag-name
+
++++++++++++++++++++++++
+	Tagging Previous 
+		Commits
+++++++++++++++++++++++++
+
+git tag <tag-name> <commit-hash> 	: Tag older commit by providing commit hash
+git tag -a <tag-name> <commit-hash>
+
+git tag -f <tag-name> : force git to reuse a tag-name
+						This is generally used to move a tag from one commit to another.
+						Suppose, I tagged x-commit instead of y-commit, and to move tag from 
+						x-commit to y-commit, I will use -f flag.
+						
++++++++++++++++++++++++
+	Deleting Tags	
+++++++++++++++++++++++++
+
+git tag -d <tag-name> : delete a tag
+
++++++++++++++++++++++
+	Pushing Tags
++++++++++++++++++++++
+By default git push command doesn't push tags to remote servers.
+To push the tags to the server all at once, we can use --tags option to git push command.
+This will transfer all of ypur tags to the remote server that are already there
+
+git push --tags : push all the tags at once
+
+git push <remote-name> <tag-name> : To push a single tag
+	eg: git push origin my_tag
+
+
+
